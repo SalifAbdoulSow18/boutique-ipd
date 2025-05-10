@@ -18,7 +18,8 @@ COPY . .
 ENV SYMFONY_SKIP_AUTO_RUN=1
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --no-scripts
+
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/var /var/www/html/vendor
