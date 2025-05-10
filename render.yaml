@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: boutique-ipd
+    env: docker
+    repo: https://github.com/SalifAbdoulSow18/boutique-ipd.git
+    branch: main
+    dockerfilePath: ./Dockerfile
+    plan: free
