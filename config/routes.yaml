@@ -1,0 +1,30 @@
+api_login_check:
+    path: /api/login_check
+
+api_register:
+    path: /api/register
+    controller: App\Controller\RegistrationController::register
+    methods: [POST]
+
+product_create:
+    path: /api/products
+    controller: App\Controller\ProductController::create
+    methods: [POST]
+
+# api_register:
+#     path: /api/register
+#     controller: App\Controller\ProductController::register
+#     methods: [POST]
+
+# api_register:
+#     path: /api/register
+#     controller: App\Controller\ProductController::register
+#     methods: [POST]
+
+
+
+# controllers:
+#     resource:
+#         path: ../src/Controller/
+#         namespace: App\Controller
+#     type: attribute

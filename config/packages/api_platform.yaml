@@ -1,0 +1,28 @@
+api_platform:
+  formats:
+    jsonld:
+      mime_types: ['application/ld+json']
+    json:
+      mime_types: ['application/json']
+    html:
+      mime_types: ['text/html']
+
+# api_platform:
+#     title: Hello API Platform
+#     version: 1.0.0
+#     formats:
+#         jsonld: ['application/ld+json']
+#     docs_formats:
+#         jsonld: ['application/ld+json']
+#         jsonopenapi: ['application/vnd.openapi+json']
+#         html: ['text/html']
+#     defaults:
+#         stateless: true
+#         cache_headers:
+#             vary: ['Content-Type', 'Authorization', 'Origin']
+#         extra_properties:
+#             standard_put: true
+#             rfc_7807_compliant_errors: true
+#     event_listeners_backward_compatibility_layer: false
+#     keep_legacy_inflector: false
+    # metadata_backward_compatibility_layer: false
