@@ -1,31 +1,37 @@
+# Étape 1 : base PHP avec extensions nécessaires
 FROM php:8.2-fpm
 
-# Install system packages
+# Installer les dépendances système
 RUN apt-get update && apt-get install -y \
-    git unzip zip libicu-dev libonig-dev libxml2-dev libzip-dev libpq-dev \
+    git unzip zip curl libicu-dev libonig-dev libxml2-dev libzip-dev libpq-dev libjpeg-dev libpng-dev libfreetype6-dev \
     && docker-php-ext-install intl pdo pdo_mysql opcache zip
 
-# Install Composer
+# Installer Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Set working directory
+# Définir le répertoire de travail
 WORKDIR /var/www/html
 
-# Copy project files
-COPY . .
+# Copier uniquement les fichiers nécessaires à composer
+COPY composer.json composer.lock ./
 
-# ⛔️ Désactive les scripts auto-exécutés de Symfony (évite l'erreur symfony-cmd)
+# Empêcher les scripts symfony (évite l’erreur `symfony-cmd not found`)
 ENV SYMFONY_SKIP_AUTO_RUN=1
 
-# Install PHP dependencies
+# Installer les dépendances PHP (avant de copier tout le code pour préserver `vendor/`)
 RUN composer install --no-dev --optimize-autoloader --no-scripts
 
+# Copier le reste de l’application
+COPY . .
 
-# Set permissions
-RUN mkdir -p /var/www/html/var \
-    && chown -R www-data:www-data /var/www/html/var /var/www/html/vendor
+# S'assurer que le dossier `var/` existe
+RUN mkdir -p var
 
+# Fixer les permissions
+RUN chown -R www-data:www-data var vendor
 
-# Expose port and run
+# Exposer le port utilisé par le serveur PHP interne
 EXPOSE 8000
+
+# Démarrer Symfony avec le serveur PHP interne (en mode prod si souhaité)
 CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]

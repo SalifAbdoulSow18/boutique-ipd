@@ -2,7 +2,36 @@ services:
   - type: web
     name: boutique-ipd
     env: docker
-    repo: https://github.com/SalifAbdoulSow18/boutique-ipd.git
-    branch: main
-    dockerfilePath: ./Dockerfile
     plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    buildCommand: ""
+    startCommand: "php -S 0.0.0.0:8000 -t public"
+    envVars:
+      - key: APP_ENV
+        value: prod
+      - key: DATABASE_URL
+        fromService:
+          name: symfony-mysql
+          property: connectionString
+
+  - type: private
+    name: symfony-mysql
+    env: docker
+    dockerfilePath: ""
+    image: mysql:8.0
+    plan: free
+    autoDeploy: false
+    envVars:
+      - key: MYSQL_ROOT_PASSWORD
+        value: rootpass
+      - key: MYSQL_DATABASE
+        value: symfony_db
+      - key: MYSQL_USER
+        value: symfony_user
+      - key: MYSQL_PASSWORD
+        value: symfony_pass
+    disk:
+      name: mysql-data
+      mountPath: /var/lib/mysql
+      sizeGB: 5
