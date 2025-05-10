@@ -22,7 +22,9 @@ RUN composer install --no-dev --optimize-autoloader --no-scripts
 
 
 # Set permissions
-RUN chown -R www-data:www-data /var/www/html/var /var/www/html/vendor
+RUN mkdir -p /var/www/html/var \
+    && chown -R www-data:www-data /var/www/html/var /var/www/html/vendor
+
 
 # Expose port and run
 EXPOSE 8000
