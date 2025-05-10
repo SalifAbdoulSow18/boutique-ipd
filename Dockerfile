@@ -14,7 +14,7 @@ WORKDIR /var/www/html
 # Copier les fichiers composer (pour le cache)
 COPY composer.json composer.lock ./
 
-# Installer les dépendances (prod) avec cache
+# Installer les dépendances (prod)
 RUN composer install --no-dev --optimize-autoloader --prefer-dist
 
 # Copier le reste de l'application
