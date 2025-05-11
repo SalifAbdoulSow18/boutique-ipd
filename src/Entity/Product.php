@@ -25,7 +25,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             securityMessage: "Only authenticated users can access this operation."
         ),
         new Get(
-            security: "is_granted('ROLE_USER') and object.getOwner() == user",
+            security: "is_granted('ROLE_USER')",
             securityMessage: "You can only access your own products."
         ),
         new Put(

@@ -56,7 +56,7 @@ class ProductController extends AbstractController
         ], Response::HTTP_OK, [], ['groups' => 'product:read']);
     }
 
-    #[Route('/{id}', name: 'product_show', methods: ['GET'])]
+    #[Route('/api/products/{id}', name: 'product_show', methods: ['GET'])]
     public function show(int $id): JsonResponse
     {
         $product = $this->productRepository->find($id);
@@ -66,13 +66,15 @@ class ProductController extends AbstractController
         }
         
         // Security check
-        if ($product->getOwner() !== $this->getUser()) {
-            return $this->json(['message' => 'Access denied'], Response::HTTP_FORBIDDEN);
-        }
+        // if ($product->getOwner() !== $this->getUser()) {
+        //     return $this->json(['message' => 'Access denied'], Response::HTTP_FORBIDDEN);
+        // }
         
         return $this->json($product, Response::HTTP_OK, [], ['groups' => 'product:read']);
     }
 
+
+// Create Product
     #[Route('/api/products', name: 'product_create', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {

@@ -11,6 +11,11 @@ product_create:
     controller: App\Controller\ProductController::create
     methods: [POST]
 
+product_show:
+    path: /api/products/{id}
+    controller: App\Controller\ProductController::show
+    methods: [GET]
+
 # api_register:
 #     path: /api/register
 #     controller: App\Controller\ProductController::register
