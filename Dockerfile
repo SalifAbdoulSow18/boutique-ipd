@@ -1,4 +1,4 @@
-FROM php:8.2.17-fpm  # Utilisez fpm plutôt que cli pour une application web
+FROM php:8.2.17-fpm
 
 # Installer les dépendances système
 RUN apt-get update && apt-get install -y \
