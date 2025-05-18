@@ -78,6 +78,12 @@ class Product
     #[Groups(['product:read', 'product:write'])]
     private ?string $image = null;
 
+    // public function getImageUrl(): ?string
+    // {
+    //     return $this->image ? '/uploads/products/' . $this->image : null;
+    // }
+
+
     #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['product:read'])]

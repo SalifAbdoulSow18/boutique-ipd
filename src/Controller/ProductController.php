@@ -35,26 +35,48 @@ class ProductController extends AbstractController
 
     #[Route('', name: 'product_list', methods: ['GET'])]
     public function index(Request $request): JsonResponse
-    {
-        $page = $request->query->getInt('page', 1);
-        $limit = $request->query->getInt('limit', 10);
-        $searchTerm = $request->query->get('search');
-        
-        $user = $this->getUser();
-        
-        if ($searchTerm) {
-            $products = $this->productRepository->searchProducts($searchTerm, $user);
-        } else {
-            $products = $this->productRepository->findByOwnerPaginated($user, $page, $limit);
-        }
-        
-        return $this->json([
-            'data' => $products,
-            'page' => $page,
-            'limit' => $limit,
-            'total' => count($products)
-        ], Response::HTTP_OK, [], ['groups' => 'product:read']);
+{
+    $page = $request->query->getInt('page', 1);
+    $limit = $request->query->getInt('limit', 10);
+    $searchTerm = $request->query->get('search');
+
+    $user = $this->getUser(); 
+
+    if ($searchTerm) {
+        $products = $this->productRepository->searchProducts($searchTerm, $user);
+    } else {
+        $products = $this->productRepository->findByOwnerPaginated($user, $page, $limit);
     }
+
+    return $this->json([
+        'data' => $products,
+        'page' => $page,
+        'limit' => $limit,
+        'total' => count($products)
+    ], Response::HTTP_OK, [], ['groups' => 'product:read']);
+}
+
+    // public function index(Request $request): JsonResponse
+    // {
+    //     $page = $request->query->getInt('page', 1);
+    //     $limit = $request->query->getInt('limit', 10);
+    //     $searchTerm = $request->query->get('search');
+        
+    //     $user = $this->getUser();
+        
+    //     if ($searchTerm) {
+    //         $products = $this->productRepository->searchProducts($searchTerm, $user);
+    //     } else {
+    //         $products = $this->productRepository->findByOwnerPaginated($user, $page, $limit);
+    //     }
+        
+    //     return $this->json([
+    //         'data' => $products,
+    //         'page' => $page,
+    //         'limit' => $limit,
+    //         'total' => count($products)
+    //     ], Response::HTTP_OK, [], ['groups' => 'product:read']);
+    // }
 
     #[Route('/api/products/{id}', name: 'product_show', methods: ['GET'])]
     public function show(int $id): JsonResponse
